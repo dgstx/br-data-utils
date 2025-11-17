@@ -9,9 +9,17 @@ module.exports = {
   ],
   // Treat .ts files as ESM and enable ts-jest ESM handling
   transform: {
-    '^.+\\.(ts|tsx)$': ['ts-jest', { useESM: true }]
+    '^.+\\.(ts|tsx)$': ['ts-jest', {
+      useESM: true,
+      tsconfig: {
+        // Garantindo que os tipos do Jest sejam reconhecidos
+        types: ['jest']
+      }
+    }]
   },
   extensionsToTreatAsEsm: ['.ts'],
+  // Adicionando configuração para garantir que os tipos do Jest sejam carregados corretamente
+  setupFilesAfterEnv: ['<rootDir>/src/types/jest.d.ts'],
   // ts-jest ESM options applied in transform above
   collectCoverageFrom: [
     'src/**/*.{ts,tsx}',
@@ -28,5 +36,9 @@ module.exports = {
   testPathIgnorePatterns: [
     '/node_modules/',
     '/dist/'
-  ]
+  ],
+  // Adicionando módulos para garantir compatibilidade
+  moduleNameMapper: {
+    '^@/(.*)$': '<rootDir>/src/$1'
+  }
 };
