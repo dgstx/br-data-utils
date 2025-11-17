@@ -61,7 +61,7 @@ jobs:
       run: npm run build
       
     - name: Upload build artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: dist
         path: dist/
@@ -113,11 +113,11 @@ jobs:
         
     - name: Create GitHub Release
       if: steps.version-check.outputs.should_publish == 'true'
-      uses: actions/create-release@v1
+      uses: softprops/action-gh-release@v2
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         tag_name: v${{ steps.version-check.outputs.version }}
-        release_name: Release v${{ steps.version-check.outputs.version }}
+        name: Release v${{ steps.version-check.outputs.version }}
         draft: false
         prerelease: false
