@@ -1,0 +1,103 @@
+{
+  "name": "br-data-utils",
+  "version": "1.0.0",
+  "description": "Biblioteca para formatação e validação de dados brasileiros (CPF, CNPJ, CEP, telefone) / Library for formatting and validating Brazilian data (CPF, CNPJ, ZIP, phone)",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./cpf": {
+      "import": "./dist/cpf.js",
+      "types": "./dist/cpf.d.ts"
+    },
+    "./cnpj": {
+      "import": "./dist/cnpj.js",
+      "types": "./dist/cnpj.d.ts"
+    },
+    "./cep": {
+      "import": "./dist/cep.js",
+      "types": "./dist/cep.d.ts"
+    },
+    "./telefone-fixo": {
+      "import": "./dist/telefone-fixo.js",
+      "types": "./dist/telefone-fixo.d.ts"
+    },
+    "./telefone-movel": {
+      "import": "./dist/telefone-movel.js",
+      "types": "./dist/telefone-movel.d.ts"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "lint": "eslint src --ext .ts",
+    "lint:fix": "eslint src --ext .ts --fix",
+    "format": "prettier --write \"src/**/*.{ts,js,json}\"",
+    "prepublishOnly": "npm run build && npm test",
+    "preversion": "npm run lint && npm test",
+    "version": "npm run format && git add -A src",
+    "postversion": "git push && git push --tags",
+    "release": "node scripts/release.js",
+    "release:patch": "node scripts/release.js patch",
+    "release:minor": "node scripts/release.js minor",
+    "release:major": "node scripts/release.js major",
+    "check-release": "node scripts/check-release-setup.js"
+  },
+  "keywords": [
+    "brasil",
+    "brazil",
+    "cpf",
+    "cnpj",
+    "cep",
+    "telefone",
+    "phone",
+    "validation",
+    "formatting",
+    "utils",
+    "typescript",
+    "brazilian",
+    "document"
+  ],
+  "author": {
+    "name": "dgstx",
+    "url": "https://github.com/dgstx"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dgstx/br-data-utils.git"
+  },
+  "bugs": {
+    "url": "https://github.com/dgstx/br-data-utils/issues"
+  },
+  "homepage": "https://github.com/dgstx/br-data-utils#readme",
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.0.0",
+    "@typescript-eslint/eslint-plugin": "^8.46.4",
+    "@typescript-eslint/parser": "^8.46.4",
+    "eslint": "^8.0.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.0",
+    "jest": "^29.0.0",
+    "prettier": "^3.0.0",
+    "ts-jest": "^29.0.0",
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+  }
+}
