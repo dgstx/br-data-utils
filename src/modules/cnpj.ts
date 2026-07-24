@@ -4,26 +4,35 @@
  */
 
 export const formatCNPJ = (cnpj: string): string | null => {
-  const cleaned = cnpj.replace(/\D/g, '');
+  const cleaned = cnpj.toUpperCase().replace(/[^A-Z0-9]/g, '');
 
   if (cleaned.length !== 14) return null;
 
   return cleaned.replace(
-    /(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/,
+    /([A-Z0-9]{2})([A-Z0-9]{3})([A-Z0-9]{3})([A-Z0-9]{4})(\d{2})/,
     '$1.$2.$3/$4-$5'
   );
 };
 
 export const validateCNPJ = (cnpj: string): boolean => {
-  const cleaned = cnpj.replace(/\D/g, '');
+  const cleaned = cnpj.toUpperCase().replace(/[^A-Z0-9]/g, '');
 
   if (cleaned.length !== 14) return false;
+  if (!/^[A-Z0-9]{12}\d{2}$/.test(cleaned)) return false;
 
-  const digits = cleaned.split('').map(Number);
+  const values = cleaned.split('').map(character => {
+    if (/[A-Z]/.test(character)) {
+      return character.charCodeAt(0) - 48;
+    }
+
+    return Number(character);
+  });
 
   // Verifica sequências com todos os dígitos idênticos
-  const allDigitsAreSame = digits.every(digit => digit === digits[0]);
-  if (allDigitsAreSame) return false;
+  const allCharactersAreSame = cleaned
+    .split('')
+    .every(character => character === cleaned[0]);
+  if (allCharactersAreSame) return false;
 
   // Algoritmo de validação do CNPJ
   const weights1 = [5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2];
@@ -31,7 +40,7 @@ export const validateCNPJ = (cnpj: string): boolean => {
 
   let sum = 0;
   for (let i = 0; i < 12; i++) {
-    sum += digits[i] * weights1[i];
+    sum += values[i] * weights1[i];
   }
   let firstVerifier = sum % 11;
   if (firstVerifier < 2) firstVerifier = 0;
@@ -39,11 +48,11 @@ export const validateCNPJ = (cnpj: string): boolean => {
 
   sum = 0;
   for (let i = 0; i < 13; i++) {
-    sum += digits[i] * weights2[i];
+    sum += values[i] * weights2[i];
   }
   let secondVerifier = sum % 11;
   if (secondVerifier < 2) secondVerifier = 0;
   else secondVerifier = 11 - secondVerifier;
 
-  return digits[12] === firstVerifier && digits[13] === secondVerifier;
+  return values[12] === firstVerifier && values[13] === secondVerifier;
 };
