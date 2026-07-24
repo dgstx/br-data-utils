@@ -33,6 +33,8 @@ const cpfValido = validateCPF('123.456.789-01'); // true
 // CNPJ
 const cnpjFormatado = formatCNPJ('11222333000181'); // '11.222.333/0001-81'
 const cnpjValido = validateCNPJ('11.222.333/0001-81'); // true
+const cnpjAlfanumerico = formatCNPJ('12ABC34501DE35'); // '12.ABC.345/01DE-35'
+const cnpjAlfanumericoValido = validateCNPJ('12.ABC.345/01DE-35'); // true
 
 // CEP
 const cepFormatado = formatCEP('12345678'); // '12345-678'
@@ -83,7 +85,7 @@ src/
 ### ✅ O que cada validação faz
 
 - **CPF**: Algoritmo oficial com dígitos verificadores e bloqueio de sequências óbvias (111.111.111-11, etc.)
-- **CNPJ**: Algoritmo oficial com dígitos verificadores e validação de sequências inválidas
+- **CNPJ**: Aceita CNPJs numéricos e alfanuméricos, usando o algoritmo oficial de dígitos verificadores
 - **CEP**: Valida formato de 8 dígitos e bloqueia CEPs impossíveis
 - **Telefone Fixo**: Valida DDDs brasileiros reais e formato de 10 dígitos
 - **Telefone Móvel**: Valida DDDs, formato de 11 dígitos e prefixos válidos (começa com 9)
@@ -95,8 +97,17 @@ src/
 - `validateCPF(cpf: string): boolean` - Valida CPF usando algoritmo oficial
 
 #### CNPJ
-- `formatCNPJ(cnpj: string): string | null` - Formata CNPJ ou retorna null se inválido
-- `validateCNPJ(cnpj: string): boolean` - Valida CNPJ usando algoritmo oficial
+- `formatCNPJ(cnpj: string): string | null` - Formata CNPJ numérico ou alfanumérico, ou retorna null se inválido
+- `validateCNPJ(cnpj: string): boolean` - Valida CNPJ numérico ou alfanumérico usando algoritmo oficial
+
+CNPJs alfanuméricos possuem 14 posições: as 12 primeiras aceitam letras maiúsculas e números, e as duas últimas são dígitos verificadores numéricos. A máscara continua sendo `XX.XXX.XXX/XXXX-XX`. Letras minúsculas são convertidas para maiúsculas.
+
+As regras seguem a [documentação técnica da Receita Federal](https://www.gov.br/receitafederal/pt-br/centrais-de-conteudo/publicacoes/documentos-tecnicos/cnpj/manual-dv-cnpj.pdf).
+
+```javascript
+formatCNPJ('12ABC34501DE35'); // '12.ABC.345/01DE-35'
+validateCNPJ('12.ABC.345/01DE-35'); // true
+```
 
 #### CEP
 - `formatCEP(cep: string): string | null` - Formata CEP ou retorna null se inválido
@@ -157,6 +168,8 @@ const isCPFValid = validateCPF('123.456.789-01'); // true
 // CNPJ (Brazilian company ID)
 const formattedCNPJ = formatCNPJ('11222333000181'); // '11.222.333/0001-81'
 const isCNPJValid = validateCNPJ('11.222.333/0001-81'); // true
+const formattedAlphanumericCNPJ = formatCNPJ('12ABC34501DE35'); // '12.ABC.345/01DE-35'
+const isAlphanumericCNPJValid = validateCNPJ('12.ABC.345/01DE-35'); // true
 
 // CEP (ZIP code)
 const formattedCEP = formatCEP('12345678'); // '12345-678'
@@ -207,7 +220,7 @@ src/
 ### ✅ What each validation does
 
 - **CPF**: Official algorithm with check digits and blocks obvious sequences (111.111.111-11, etc.)
-- **CNPJ**: Official algorithm with check digits and invalid sequence validation
+- **CNPJ**: Supports numeric and alphanumeric CNPJs using the official check digit algorithm
 - **CEP**: Validates 8-digit format and blocks impossible ZIP codes
 - **Landline Phone**: Validates real Brazilian DDDs and 10-digit format
 - **Mobile Phone**: Validates DDDs, 11-digit format and valid prefixes (starts with 9)
@@ -219,8 +232,17 @@ src/
 - `validateCPF(cpf: string): boolean` - Validates CPF using official algorithm
 
 #### CNPJ
-- `formatCNPJ(cnpj: string): string | null` - Formats CNPJ or returns null if invalid
-- `validateCNPJ(cnpj: string): boolean` - Validates CNPJ using official algorithm
+- `formatCNPJ(cnpj: string): string | null` - Formats numeric or alphanumeric CNPJ, or returns null if invalid
+- `validateCNPJ(cnpj: string): boolean` - Validates numeric or alphanumeric CNPJ using the official algorithm
+
+Alphanumeric CNPJs have 14 positions: the first 12 accept uppercase letters and numbers, while the last two positions remain numeric check digits. The mask remains `XX.XXX.XXX/XXXX-XX`. Lowercase letters are converted to uppercase.
+
+The rules follow the [Brazilian Federal Revenue technical documentation](https://www.gov.br/receitafederal/pt-br/centrais-de-conteudo/publicacoes/documentos-tecnicos/cnpj/manual-dv-cnpj.pdf).
+
+```javascript
+formatCNPJ('12ABC34501DE35'); // '12.ABC.345/01DE-35'
+validateCNPJ('12.ABC.345/01DE-35'); // true
+```
 
 #### CEP
 - `formatCEP(cep: string): string | null` - Formats CEP or returns null if invalid

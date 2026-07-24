@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.0] - 2026-07-24
+
+### Changed
+- **CNPJ Module** (`./cnpj`)
+  - Support for the new 14-character alphanumeric CNPJ format
+  - The first 12 positions accept uppercase letters and numbers
+  - The last 2 positions remain numeric check digits
+  - Check digit validation follows the official ASCII minus 48 and modulo 11 rules
+  - Numeric CNPJs remain fully compatible with the previous format
+  - Lowercase letters are normalized to uppercase when formatting and validating
+
 ## [1.0.0] - 2025-11-17
 
 ### Added
@@ -66,4 +77,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **No External Dependencies**: Zero production dependencies for minimal footprint
 - **Type Safety**: Full TypeScript strict mode enabled
 
+[1.1.0]: https://github.com/dgstx/br-data-utils/releases/tag/1.1.0
 [1.0.0]: https://github.com/dgstx/br-data-utils/releases/tag/1.0.0
