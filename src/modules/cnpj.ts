@@ -17,6 +17,7 @@ export const formatCNPJ = (cnpj: string): string | null => {
 export const validateCNPJ = (cnpj: string): boolean => {
   const cleaned = cnpj.toUpperCase().replace(/[^A-Z0-9]/g, '');
 
+  if (cleaned.length !== 14) return false;
   if (!/^[A-Z0-9]{12}\d{2}$/.test(cleaned)) return false;
 
   const values = cleaned.split('').map(character => {
