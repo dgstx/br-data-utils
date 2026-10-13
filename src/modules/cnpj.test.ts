@@ -18,6 +18,7 @@ describe('CNPJ Module', () => {
     it('deve retornar null para CNPJ inválido', () => {
       expect(formatCNPJ('1122233300018')).toBeNull(); // 13 dígitos
       expect(formatCNPJ('112223330001811')).toBeNull(); // 15 dígitos
+      expect(formatCNPJ('12ABC34501DEZZ')).toBeNull();
       expect(formatCNPJ('')).toBeNull();
       expect(formatCNPJ('abc')).toBeNull();
     });
