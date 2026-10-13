@@ -1,6 +1,6 @@
 {
   "name": "br-data-utils",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Biblioteca para formatação e validação de dados brasileiros (CPF, CNPJ, CEP, telefone) / Library for formatting and validating Brazilian data (CPF, CNPJ, ZIP, phone)",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
